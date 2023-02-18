@@ -123,6 +123,7 @@ class DataprocExportRdbmsTableToGcsMotif(
         self.main_python_file_uri = main_python_file_uri
         self.movement_parameters = movement_parameters
         self.pip_packages = self.config.dataproc_config.get("pip_packages", [])
+        
         self.spark_jars_packages = self.config.dataproc_config.get(
             "spark_jars_packages", ""
         )
@@ -312,6 +313,7 @@ class DataprocExportRdbmsTableToGcsMotif(
             },
             region=self.config.environment.region,
             project_id=self.config.environment.project,
+            timeout = self.config.dataproc_config["timeout"] if self.config.dataproc_config.get("timeout") else None,
             dag=dag,
             task_group=task_group,
         )
@@ -432,6 +434,7 @@ class DataprocServerlessExportRdbmsTableToGcsMotif(
             batch=self.batch_config,
             region=self.config.environment.region,
             batch_id=self.batch_id,
+            timeout = self.config.dataproc_config["timeout"] if self.config.dataproc_config.get("timeout") else None,
             dag=dag,
             task_group=task_group,
         )

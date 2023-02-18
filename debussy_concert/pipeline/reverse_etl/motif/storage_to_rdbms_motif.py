@@ -13,6 +13,7 @@ class StorageToRdbmsQueryMotif(MotifBase):
         dbapi_hook: DbApiHookInterface,
         storage_hook: StorageHookInterface,
         destination_table: str,
+        constraint_name: str = None,
         name=None,
         **op_kw_args
     ):
@@ -21,6 +22,7 @@ class StorageToRdbmsQueryMotif(MotifBase):
         self.dbapi_hook = dbapi_hook
         self.storage_hook = storage_hook
         self.destination_table = destination_table
+        self.constraint_name = constraint_name
         self.op_kw_args = op_kw_args
 
     def setup(self, storage_uri_prefix=None):
@@ -34,6 +36,7 @@ class StorageToRdbmsQueryMotif(MotifBase):
             storage_hook=self.storage_hook,
             storage_file_uri=self.storage_file_uri,
             table_name=self.destination_table,
+            constraint_name = self.constraint_name,
             dag=dag,
             task_group=task_group,
             **self.op_kw_args

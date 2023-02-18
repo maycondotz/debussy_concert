@@ -147,6 +147,7 @@ class BigQueryToRdbms(CompositionBase):
             dbapi_hook=destination_dbapi_hook,
             storage_hook=storage_hook,
             destination_table=movement_parameters.destination_uri,
+            constraint_name = movement_parameters.constraint_name
         )
 
         phrase = StorageToDestinationPhrase(
