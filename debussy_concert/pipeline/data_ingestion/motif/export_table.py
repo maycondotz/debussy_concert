@@ -123,7 +123,8 @@ class DataprocExportRdbmsTableToGcsMotif(
         self.main_python_file_uri = main_python_file_uri
         self.movement_parameters = movement_parameters
         self.pip_packages = self.config.dataproc_config.get("pip_packages", [])
-        
+        self.labels = dict(self.config.dataproc_config.get("labels", {}))
+        self.preemptible_machine = self.config.dataproc_config.get("preemptible", False)
         self.spark_jars_packages = self.config.dataproc_config.get(
             "spark_jars_packages", ""
         )
@@ -211,12 +212,13 @@ class DataprocExportRdbmsTableToGcsMotif(
             "worker_config": {
                 "disk_config": self.worker_disk_config,
                 "machine_type_uri": self.config.dataproc_config["machine_type"],
-                "num_instances": self.work_num_instances,
+                "num_instances": self.work_num_instances                
             },
             "secondary_worker_config": {
                 "disk_config": self.worker_disk_config,
                 "machine_type_uri": self.config.dataproc_config["machine_type"],
                 "num_instances": self.config.dataproc_config["num_workers"],
+                "is_preemptible": self.preemptible_machine
             },
             "autoscaling_config": {
                 "policy_uri": f"projects/{project}/regions/{region}/autoscalingPolicies/ephemeral-clusters"

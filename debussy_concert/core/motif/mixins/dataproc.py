@@ -41,6 +41,7 @@ class DataprocClusterHandlerMixin:
             cluster_config=self.cluster_config,
             region=self.config.environment.region,
             cluster_name=self.cluster_name,
+            labels=self.labels,
             dag=dag,
             task_group=task_group,
         )
