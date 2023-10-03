@@ -89,7 +89,7 @@ class DataIngestionBase(CompositionBase):
             gcs_partition=gcs_partition,
             destination_partition=destination_partition,
             source_format="PARQUET",
-            write_disposition="WRITE_TRUNCATE",
+            write_disposition="WRITE_APPEND",
             create_disposition="CREATE_IF_NEEDED",
             hive_partitioning_options=hive_options,
             table_definition=table_definition,
