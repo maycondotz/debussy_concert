@@ -84,12 +84,14 @@ class DataIngestionBase(CompositionBase):
         hive_options = HivePartitioningOptions()
         hive_options.mode = "AUTO"
         hive_options.source_uri_prefix = source_uri_prefix
+        write_disposition = "WRITE_TRUNCATE" if ("_flag_load=full" in gcs_partition or "_load_flag=full" in gcs_partition) else "WRITE_APPEND" 
+      
         motif = LoadGcsToBigQueryHivePartitionMotif(
             name="load_bigquery_from_gcs_hive_partition_motif",
             gcs_partition=gcs_partition,
             destination_partition=destination_partition,
             source_format="PARQUET",
-            write_disposition="WRITE_APPEND",
+            write_disposition=write_disposition,
             create_disposition="CREATE_IF_NEEDED",
             hive_partitioning_options=hive_options,
             table_definition=table_definition,
